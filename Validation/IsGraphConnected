@@ -1,0 +1,140 @@
+package validation;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
+/**
+ * This class is used to check whether the graph is connected or not.
+ * 
+ */
+public class IsGraphConnected {
+	private LinkedList<Integer> territoryAdjacencyList[];
+	private int territoryCount;
+	
+	/**
+	 * This method is used to add a connection between Territory and it's Adjacent Territory.
+	 * 
+	 * @param territoryNumber Number of Territory
+	 * @param noOfAdjacentTerritory Number of Adjacent Territory
+	 * 
+	 */
+	void addConnectionLine(int territoryNumber,int noOfAdjacentTerritory){
+		territoryAdjacencyList[territoryNumber].add(noOfAdjacentTerritory); 
+	} 
+	
+
+	/**
+	 * This parameterized constructor is used to initialize local graph data.
+	 * 
+	 * @param territoryCount Number of territories
+	 */
+	IsGraphConnected(int territoryCount) { 
+		this.territoryCount = territoryCount; 
+		territoryAdjacencyList = new LinkedList[territoryCount]; 
+		int i = 0;
+		while(i < territoryCount) {
+			territoryAdjacencyList[i] = new LinkedList();
+			i++;
+		}
+		/*for (int i=0; i<territoryCount; ++i) {
+			territoryAdjacencyList[i] = new LinkedList();
+		} */      
+	} 
+	
+	/**
+	 * This method returns Transpose of Graph.
+	 * 
+	 * @return Transpose of graph
+	 * 
+	 */
+	IsGraphConnected getTransposeOfGraph() { 
+		IsGraphConnected g = new IsGraphConnected(territoryCount); 
+		int v = 0;
+		while(v < territoryCount) {
+			Iterator<Integer> i = territoryAdjacencyList[v].listIterator(); 
+			while (i.hasNext()) 
+				g.territoryAdjacencyList[i.next()].add(v); 
+			v++;
+		}
+		/*for (int v = 0; v < territoryCount; v++) { 
+			// Recur for all the vertices adjacent to this vertex 
+			Iterator<Integer> i = territoryAdjacencyList[v].listIterator(); 
+			while (i.hasNext()) 
+				g.territoryAdjacencyList[i.next()].add(v); 
+		} */
+		return g; 
+	} 
+	
+	/**
+	 * The function checks whether the graph is connected or not. 
+	 * 
+	 * @return true if graph is connected.
+	 * 
+	 */
+	Boolean checkGraphConnection() {  
+		Boolean visited[] = new Boolean[territoryCount]; 
+		int i = 0, a = 0, b = 0, c = 0;
+		while(i < territoryCount) {
+			visited[i] = false;
+			i++;
+		}
+		DFSTraverse(visited, 0);
+		while(a < territoryCount) {
+			if (visited[a] == false) 
+				return false;
+			a++;
+		}
+		IsGraphConnected gr = getTransposeOfGraph(); 
+		while(b < territoryCount) {
+			visited[b] = false; 
+			b++;
+		}
+		gr.DFSTraverse(visited, 0); 
+		while(c < territoryCount) {
+			if (visited[c] == false) 
+				return false;
+			c++;
+		}
+		return true; 
+		
+		/*for (int i = 0; i < territoryCount; i++) {
+			visited[i] = false;
+		} 
+		
+		for (int i = 0; i < territoryCount; i++) {
+			if (visited[i] == false) 
+				return false; 
+		}
+		
+		for (int i = 0; i < territoryCount; i++) {
+			visited[i] = false; 
+		} 
+		
+		for (int i = 0; i < territoryCount; i++) {
+			if (visited[i] == false) 
+				return false; 
+		}*/
+		
+	}
+
+	
+
+	/**
+	 * This is a recursive function which prints DFS starting from first territory. 
+	 * 
+	 * @param territory Number of Territory
+	 * @param visited mark node as visited
+	 */
+	void DFSTraverse(Boolean visited[], int territory) { 
+		visited[territory] = true; // Mark the current node as visited
+		int n; 
+		Iterator<Integer> i = territoryAdjacencyList[territory].iterator(); // Recur for all the vertices adjacent to this vertex
+		while (i.hasNext()) 
+		{ 
+			n = i.next(); 
+			if (!visited[n]) {
+				DFSTraverse(visited, n); 
+			}   
+		} 
+	} 
+}

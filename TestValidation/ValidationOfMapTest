@@ -1,0 +1,134 @@
+package TestValidation;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import exception.InvalidMapException;
+import model.Continent;
+import model.Territories;
+import validation.ValidationOfMap;
+
+/**
+ * ValidationOfMap Test class
+ *
+ */
+public class ValidationOfMapTest {
+	boolean isMapValid;
+	ValidationOfMap mapValidator;
+	Continent continent;
+	Territories territory;
+
+	/**
+	 * This method is used to initialize all Map Data and invoked at the start of
+	 * all the test methods.
+	 */
+	@BeforeEach
+	public void beforeTest() {
+		continent = new Continent();
+		territory = new Territories();
+
+		continent.setContinentValue("Northern Africa", 4);
+		continent.setContinentValue("Western Africa", 5);
+
+		continent.addContinentTerritory("Northern Africa", "Morocco");
+		continent.addContinentTerritory("Northern Africa", "Algeria");
+		continent.addContinentTerritory("Western Africa", "Western Sahara");
+		continent.addContinentTerritory("Western Africa", "Mauritania");
+
+		territory.addAdjacentTerritory("Morocco", "Algeria");
+		territory.addAdjacentTerritory("Morocco", "Western Sahara");
+		territory.addAdjacentTerritory("Algeria", "Morocco");
+		territory.addAdjacentTerritory("Algeria", "Western Sahara");
+		territory.addAdjacentTerritory("Algeria", "Mauritania");
+		territory.addAdjacentTerritory("Western Sahara", "Morocco");
+		territory.addAdjacentTerritory("Western Sahara", "Algeria");
+		territory.addAdjacentTerritory("Western Sahara", "Mauritania");
+		territory.addAdjacentTerritory("Mauritania", "Algeria");
+		territory.addAdjacentTerritory("Mauritania", "Western Sahara");
+
+		territory.addNumberOfTerritory("Morocco", 0);
+		territory.addNumberOfTerritory("Algeria", 1);
+		territory.addNumberOfTerritory("Western Sahara", 2);
+		territory.addNumberOfTerritory("Mauritania", 3);
+	}
+
+	/**
+	 * This method is used to test
+	 * {@linkplain validation.ValidationOfMap#mapValidation()} method of
+	 * ValidationOfMao.java.
+	 * 
+	 * @throws InvalidMapException map file should not be null.
+	 */
+	@Test
+	public void testMapValidation() throws InvalidMapException {
+		mapValidator = new ValidationOfMap(continent, territory);
+		assertTrue(mapValidator.mapValidation());
+	}
+
+	/**
+	 * This method is used to test
+	 * {@link validation.ValidationOfMap#adjacentTerritoryValidation()}
+	 * method of ValidationOfMap.java.
+	 * 
+	 * @throws InvalidMapException Adjacent should not be null.
+	 */
+	@Test
+	public void testAdjcentTerritoriesValidation() throws InvalidMapException {
+		mapValidator = new ValidationOfMap(continent, territory);
+		assertTrue(mapValidator.adjacentTerritoryValidation());
+	}
+
+	/**
+	 * This method is used to test
+	 * {@link validation.ValidationOfMap#continentValueValidation()} method
+	 * of ValidationOfMap.java.
+	 * 
+	 * @throws InvalidMapException Continent Control value should be more than 1.
+	 */
+	@Test
+	public void testContinentValueValidation() throws InvalidMapException {
+		mapValidator = new ValidationOfMap(continent, territory);
+		assertTrue(mapValidator.continentValueValidation());
+	}
+
+	/**
+	 * This method is used to test
+	 * {@link validation.ValidationOfMap#isGraphConnected()} method of
+	 * ValidationOfMap.java.
+	 * 
+	 * @throws InvalidMapException Graph is not Connected.
+	 */
+	@Test
+	public void testIsGraphConnected() throws InvalidMapException {
+		mapValidator = new ValidationOfMap(continent, territory);
+		assertTrue(mapValidator.isGraphConnected());
+	}
+
+	/**
+	 * This method is used to test
+	 * {@link validation.ValidationOfMap#continentValidation()} method of
+	 * ValidationOfMap.java.
+	 * 
+	 * @throws InvalidMapException Continent should be unique
+	 */
+	@Test
+	public void testContinentValidation() throws InvalidMapException {
+		mapValidator = new ValidationOfMap(continent, territory);
+		assertTrue(mapValidator.continentValidation());
+	}
+
+	/**
+	 * This method is used to test
+	 * {@link validation.ValidationOfMap#territoryValidation()} method of
+	 * ValidationOfMap.java.
+	 * 
+	 * @throws InvalidMapException Territory should not be null.
+	 */
+	@Test
+	public void testTerritoriesValidation() throws InvalidMapException {
+		mapValidator = new ValidationOfMap(continent, territory);
+		assertTrue(mapValidator.territoryValidation());
+
+	}
+}

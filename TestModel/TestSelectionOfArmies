@@ -1,0 +1,45 @@
+package TestModel;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import model.SelectionOfArmies;
+
+/**
+ * SelectionOfArmies Model Test class.
+ *
+ */
+public class TestSelectionOfArmies {
+	int twoPlayerArmies = 40;
+	int threePlayerArmies = 35;
+	int fourPlayerArmies = 30;
+	int fivePlayerArmies = 25;
+
+	SelectionOfArmies twoPlayer;
+	SelectionOfArmies threePlayer;
+	SelectionOfArmies fourPlayer;
+	SelectionOfArmies fivePlayer;
+	
+	/**
+	 * This method is invoked at the start of all the test methods.
+	 */
+	@BeforeEach public void beforeTest() {
+		this.twoPlayer = new SelectionOfArmies(2);
+		this.threePlayer = new SelectionOfArmies(3);
+		this.fourPlayer = new SelectionOfArmies(4);
+		this.fivePlayer = new SelectionOfArmies(5);
+	}
+	
+	/**
+	 * This method is to test the selection of Number of initial armies according to Player.
+	 * 
+	 */
+	@Test public void testSelectionOfArmies() {
+		assertEquals(twoPlayerArmies,twoPlayer.getArmiesOfPlayers());
+		assertEquals(threePlayerArmies,threePlayer.getArmiesOfPlayers());
+		assertEquals(fourPlayerArmies,fourPlayer.getArmiesOfPlayers());
+		assertEquals(fivePlayerArmies,fivePlayer.getArmiesOfPlayers());
+	}
+}

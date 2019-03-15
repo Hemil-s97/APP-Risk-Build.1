@@ -23,7 +23,7 @@ public class TestContinent {
 	String NATerritoryTwo = "Algeria";
 	String WATerritoryOne = "Western Sahara";
 	String WATerritoryTwo = "Mauritania";
-	String WATerritorythree = "Australia";
+	
 
 	Map<String, Integer> continentValue;
 	Map<String, ArrayList<String>> continentTerritory;

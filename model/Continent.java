@@ -69,7 +69,7 @@ public class Continent {
 	}
 
 	/**
-	 * Used to identify which continent has how many territory and Create a Map
+	 * This is used to find which continent has how many territory and Create a Map
 	 * continentTerritories
 	 * 
 	 * @param continent name of Continent

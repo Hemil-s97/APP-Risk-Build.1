@@ -32,7 +32,9 @@ public class Continent {
 		valueOfContinent = new HashMap<>();
 		continentTerritories = new HashMap<>();
 		continentOccupiedTerritories = new HashMap<>();
-		playerOccupiedContTerr = new HashMap<>();
+		
+		contTerrValue = new HashMap<>();
+		//playerOccupiedContTerr = new HashMap<>();
 	}
 
 	/**

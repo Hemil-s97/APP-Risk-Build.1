@@ -30,7 +30,8 @@ public class StartingPhase extends Panels{
 	 */
 	public void initialStartingPhase() {
 		int noOfPlayers = players.getPlayerList().size();
-		String temp = players.getPlayerList().get(2);
+		armies = new SelectionOfArmies(noOfPlayers);
+		/*String temp = players.getPlayerList().get(2);
 		switch (temp) {
 		case "Neutral Player":
 			armies = new SelectionOfArmies(2);
@@ -39,32 +40,19 @@ public class StartingPhase extends Panels{
 		default:
 			armies = new SelectionOfArmies(noOfPlayers);
 			break;
-		}
+		}*/
 		/*
 		 * if (players.getPlayerList().get(2).equals("Neutral Player")) { armies = new
 		 * ArmiesSelection(2); } else { armies = new ArmiesSelection(noOfPlayers); }
 		 */
-		riskLogger("Total players in game : " + noOfPlayers);
-		riskLogger("------------------");
 		int j = 0;
 		while (j < noOfPlayers) {
 			String playerName = players.getPlayerList().get(j);
 			players.setCurrentPhase("StartUp Phase");
 			players.addPlayerContinent(playerName, new Continent());
 			players.initialArmy(playerName, armies.getArmiesOfPlayers());
-			riskLogger(playerName + " Assigned with Initial Army of " + players.getPlayerArmy(playerName));
 			j++;
 		}
-		/*
-		 * for (int i = 0; i < noOfPlayers; i++) { String playerName =
-		 * players.getPlayerList().get(i); players.setCurrentPhase("StartUp Phase");
-		 * players.addPlayerContinent(playerName, new Continent());
-		 * players.initialArmy(playerName, armies.getPlayerArmies());
-		 * riskLogger(playerName + " Assigned with Initial Army of " +
-		 * players.getPlayerArmy(playerName)); }
-		 */
-		riskLogger("------------------");
-		riskLogger("Initial StartUp Started");
 		Map<String, String> territoryContinent = territory.getTerritoryOfContinent();
 		int playerCount = 0, m = 0;
 		while (m < territory.getTotalTerritories().size()) {
@@ -91,25 +79,6 @@ public class StartingPhase extends Panels{
 			}
 			m++;
 		}
-		/*
-		 * for (int i = 0; i < territory.getTerritoryList().size(); i++) { String
-		 * playerName = players.getPlayerList().get(playerCount); // Retrieve Random
-		 * Territory Object randomTerritory = territoryContinent.keySet().toArray()[new
-		 * Random().nextInt(territoryContinent.keySet().toArray().length)];
-		 * if(players.getPlayerArmy(playerName) >= 1) { Continent temporaryContinent =
-		 * players.getPlayerContinent(playerName);
-		 * temporaryContinent.addContinentOwnedTerritory(territoryContinent.get(
-		 * randomTerritory), randomTerritory.toString(), true);
-		 * riskLogger(playerName+" assigned Territory: "+ randomTerritory);
-		 * territoryContinent.remove(randomTerritory);
-		 * territory.updateTerritoryUser(playerName, randomTerritory.toString());
-		 * territory.updateTerritoryArmy(randomTerritory.toString(), 1, "ADD");
-		 * players.updatePlayerContinent(playerName, temporaryContinent);
-		 * players.updateArmy(playerName, 1, "Remove"); playerCount++; if (playerCount
-		 * >= noOfPlayers) playerCount = 0; } else {
-		 * territory.updateTerritoryUser("No Player", randomTerritory.toString());
-		 * territory.updateTerritoryArmy(randomTerritory.toString(), 0, "ADD"); } }
-		 */
 
 		int x = 0;
 		while (x < noOfPlayers) {
@@ -130,25 +99,6 @@ public class StartingPhase extends Panels{
 			}
 			x++;
 		}
-		;
-		/*
-		 * for(int i = 0;i < noOfPlayers;i++) { String nameOfThePlayer =
-		 * players.getPlayers(i); int noOfArmy = players.getPlayerArmy(nameOfThePlayer);
-		 * if(noOfArmy > 0) { do { for(Entry<String, String> entry :
-		 * territory.getTerritoryUser().entrySet()) {
-		 * if(entry.getValue().equalsIgnoreCase(nameOfThePlayer) &&
-		 * players.getPlayerArmy(nameOfThePlayer) > 0) {
-		 * territory.updateTerritoryArmy(entry.getKey(), 1, "ADD");
-		 * players.updateArmy(nameOfThePlayer, 1, "DELETE"); } } noOfArmy =
-		 * players.getPlayerArmy(nameOfThePlayer); } while(noOfArmy > 0);
-		 * 
-		 * }
-		 * 
-		 * }
-		 */
-		players.setCurrentPhase("Reinforcement");
-		riskLogger(" ");
-		riskLogger("Reinforcement phase started");
 	}
 
 	/**

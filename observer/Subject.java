@@ -75,14 +75,6 @@ public class Subject {
 			observer.fortificationUpdate();
 		}
 	}
-
-	/**
-	 *  get method for state
-	 * @return state state
-	 */
-	public String getState() {
-		return state;
-	}
 	
 	/**
 	 *  get method for phase

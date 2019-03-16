@@ -57,6 +57,14 @@ public class Subject {
 	public String getAttackMessage() {
 		return attackMsg;
 	}
+	
+	/**
+	 *  get method for state
+	 * @return state state
+	 */
+	public String getState() {
+		return state;
+	}
 
 	/**
 	 * set method for attack message 

@@ -22,7 +22,11 @@ public class Continent {
 	Map<String, Integer> valueOfContinent;
 	Map<String, ArrayList<String>> continentTerritories;
 	Map<String, ArrayList<String>> continentOccupiedTerritories;
-	Map<String, Territories> playerOccupiedContTerr;
+	
+	Map<String, Integer> contTerrValue; /** changed playerOccupiedContTerr to contTerrValue and in Map changed Map<String, Territories> 
+	
+	 to Map<String, Integer> */
+	//Map<String, Territories> playerOccupiedContTerr;
 
 	public Continent() {
 		valueOfContinent = new HashMap<>();

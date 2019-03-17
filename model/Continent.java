@@ -36,6 +36,20 @@ public class Continent {
 		contTerrValue = new HashMap<>();
 		//playerOccupiedContTerr = new HashMap<>();
 	}
+	
+	
+	
+		public void  addContTerritoryValue(String continent) {
+		if (contTerrValue.containsKey(continent)) {
+			contTerrValue.replace(continent, contTerrValue.get(continent), contTerrValue.get(continent) + 1);
+		} 
+			
+			
+			else {
+			contTerrValue.put(continent, 1);
+		}
+	}
+	
 
 	/**
 	 * @return Map playerOccupiedTerr

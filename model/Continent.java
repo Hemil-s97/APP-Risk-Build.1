@@ -45,7 +45,9 @@ public class Continent {
 		} 
 			
 			
-			
+			else {
+			contTerrValue.put(continent, 1);
+		}
 	}
 	
 

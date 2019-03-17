@@ -36,6 +36,9 @@ public class Territories {
 		checkDuplicateTerritoryContinent = new HashMap<>();
 		territoryNumber = new HashMap<>();
 	}
+	public Map<Integer, String> getCardValue() {
+		return cardValue;
+	}
 	
 	/**
 	 * 

@@ -12,8 +12,8 @@ import java.util.Map;
 public class RiskPlayers {
 	/**
 	 * @param playerContinent player had territories in particular continent
-	 * @param playerArmy player having no. of armies
-	 * @param playerList no. of player currently playing game
+	 * @param playerArmy It will provide the information about player having no. of armies
+	 * @param playerList It will define the  no. of player currently playing game
 	 * @param playerPlaying no. of player playing game
 	 */
 	Map<String, Continent> playerContinent; // 

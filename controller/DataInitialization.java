@@ -1,21 +1,28 @@
 package controller;
 
+import java.util.logging.Logger;
+
+import strategy.Context;
+
 import model.Continent;
 import model.RiskPlayers;
 import model.Territories;
+import view.Panels;
+import strategy.Context;
 
 /**
  * This class initializes the data for Reinforcement phase if the map is valid
  * and the graph is connected.
  * 
  */
-public class DataInitialization {
+public class DataInitialization extends Panels{
 	String mapFilePath;
 	Continent continent;
 	Territories territory;
 	int noOfPlayers;
 	int noOfArmyPerPlayer;
 	RiskPlayers players;
+	private static final Logger LOGGER = Logger.getLogger(DataInitialization.class.getName());
 
 	/**
 	 * This method returns the count of players in a game.
@@ -145,16 +152,14 @@ public class DataInitialization {
 	 * This method gives the path of map file to BoardData class, invoke the method
 	 * {@link BoardData#boardDataGeneration()} of class BoardData which generates
 	 * the data and Validate the map Data from map file. if map is valid and graph
-	 * is connected then it starts the process of Initial Reinforcement: invoke the
-	 * method {@linkplain Reinforcement#armyGeneration()} of class Reinforcement.
-	 *
+	 * is connected then it starts the process of Initial Reinforcement
+	 * 
 	 * @return true if map Data is Valid else, return false.
 	 */
 	public boolean dataGeneration() {
 
 		BoardData boardData = new BoardData(mapFilePath);
 		boolean isMapValid = boardData.boardDataGeneration();
-		System.out.println(isMapValid);
 
 		if (isMapValid) {
 			territory = boardData.objectOfTerritory;
@@ -164,13 +169,11 @@ public class DataInitialization {
 			startUpPhase.initialStartingPhase();
 			setTerritory(startUpPhase.territory);
 			setContinent(startUpPhase.continent);
-			Reinforcement reinforcement = new Reinforcement(players.getPlayers(0), getContinent(), getTerritory(),
-					players);
-			players.updateArmy(players.getPlayers(0), reinforcement.armyGeneration(), "ADD");
 			setPlayers(startUpPhase.players);
-		} else {
-			System.out.println("Map is not Valid");
-		}
+			Context context = new Context(players);
+			context.executeReinforcementArmy(players.getPlayers(0), continent);
+			LOGGER.info("Map is Validated and Data is Generated");
+			} 
 		return isMapValid;
 	}
 }

@@ -39,7 +39,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -50,19 +53,26 @@ import model.SelectionOfArmies;
 import model.Continent;
 import model.RiskPlayers;
 import model.Territories;
-
+import com.risk.observer.Observer;
+import com.risk.observer.Subject;
+import com.risk.strategy.Context;
 /**
  * 
  * User Interface for Game Play
  */
-public class Panels implements ActionListener, ListSelectionListener {
-	/**
-	 * @param frame     Frame object
-	 * @param players   Player model object
-	 * @param territory Territory model object
-	 * @param continent Continent model object
-	 */
+public class Panels extends Observer implements ActionListener, ListSelectionListener {
+	
 
+	public static final String INFANTRY_CARD = "Infantry";
+	public static final String CAVALRY_CARD = "Cavalry";
+	public static final String ARTILLERY_CARD = "Artillery";
+	public static final String WILD_CARD = "Wild Card";
+	public static final String CONTENT_INVALID = "Invalid Content";
+	public static final String MANAN_PLAYER = "Manan";
+	public static final String SHALIN_PLAYER = "Shalin";
+	public static final String KHYATI_PLAYER = "Khyati";
+	public static final String VAISHAKHI_PLAYER = "Vaishakhi";
+	public static final String HIMEN_PLAYER = "Himen";
 	JFrame frame;
 	RiskPlayers players;
 	Territories territory;
@@ -86,10 +96,13 @@ public class Panels implements ActionListener, ListSelectionListener {
 	private GridLayout mainLayout;
 	private JButton reinforceButn;
 	private JButton attackButn;
+	private JButton attackSkipBtn;
+	private JButton fortifySkipBtn;
 	private JButton fortifyButn;
 	private JButton endTurnButn;
 	private JButton menuButn;
 	private JButton turnInButn;
+	private JButton tradeCardBtn;
 	private JButton createNewMapButn;
 	private JButton editExistingMapButn;
 	private JButton newButn;
@@ -102,9 +115,8 @@ public class Panels implements ActionListener, ListSelectionListener {
 	private JButton editButn;
 	private JButton startGameButn;
 
-	private JTextArea territoryDetails;
-	private JTextArea logArea;
-	private JList<String> cardsList;
+	private JTextArea territoryDetails = new JTextArea(10,4);
+	private JTextArea logArea = new JTextArea(4,20);
 	private JList<String> territoryAList;
 	private JList<String> territoryBList;
 	private JList<String> continentInfoList;
@@ -123,10 +135,24 @@ public class Panels implements ActionListener, ListSelectionListener {
 
 	private JComboBox<String> territoryADropDown;
 	private JComboBox<String> territoryBDropDown;
+	private JComboBox<Integer> attackerDiceDropDown;
+	private JComboBox<Integer> defenderDiceDropDown;
 	private SpinnerNumberModel selectArmyModel;
 	private JLabel fortErrorMsg;
-	public static JTextArea log = new JTextArea(25, 20);
+	private Context context;
+	private JPanel gamePanel;
+	private JComboBox<String> territoryCDropDown;
+	private JComboBox<String> allOutDropDown;
+	public static JTextArea log = new JTextArea(25,20);
 
+	public Panels() {
+
+	}
+	public GamePanels(Subject observerSubject) {
+		this.observerSubject = observerSubject;
+		this.observerSubject.attach(this);
+
+	}
 	/**
 	 * Setting up the number of Players.
 	 * 
@@ -140,11 +166,11 @@ public class Panels implements ActionListener, ListSelectionListener {
 		playerPanel.setLayout(playerLayout);
 
 		JLabel playerCountLabel = new JLabel("Number of Players : ");
-		twoPlayersButn = new JButton("Two");
-		threePlayersButn = new JButton("Three");
-		fourPlayersButn = new JButton("Four");
-		fivePlayersButn = new JButton("Five");
-		backButn = new JButton("Back");
+		JButton twoPlayersButn = new JButton("Two");
+		JButton threePlayersButn = new JButton("Three");
+		JButton fourPlayersButn = new JButton("Four");
+		JButton fivePlayersButn = new JButton("Five");
+		backButn = new JButton ("Back");	
 
 		playerPanel.add(playerCountLabel);
 		playerPanel.add(twoPlayersButn);
@@ -263,7 +289,7 @@ public class Panels implements ActionListener, ListSelectionListener {
 
 	/**
 	 * 
-	 * @return GamePanel object which consist portion of Game Play
+	 * @return Panel object which consist portion of Game Play
 	 */
 	protected JPanel gameView() {
 

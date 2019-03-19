@@ -41,14 +41,14 @@ public interface Strategy {
 	
 	/**
 	 * This method implements strategy pattern for moving army after attack
+	 * @param playerName name of the player
 	 * @param fromTerritory from territory
 	 * @param toTerritory to territory
-	 * @param toTerritory2   to territory2
 	 * @param currentTerritory territory object
 	 * @param armies number of armies to move from
 	 * 
 	 */
-	public void moveArmyAfterAttack(String fromTerritory, String toTerritory, String toTerritory2, Territories currentTerritory, int armies);
+	public void moveArmyAfterAttack(String playerName, String fromTerritory, String toTerritory, Territories currentTerritory, int armies);
 
 	/**
 	 * This method implements strategy pattern for fortification phase

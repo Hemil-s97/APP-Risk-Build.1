@@ -9,7 +9,7 @@ import java.util.Collections;
  * playerList, playerPlaying as its data member.
  *
  */
-public class RiskPlayers {
+public class RiskPlayers implements Strategy {
 	/**
 	 * @param playerContinent player had territories in particular continent
 	 * @param playerArmy It will provide the information about player having no. of armies
@@ -21,6 +21,8 @@ public class RiskPlayers {
 	ArrayList<String> playerList; 
 	ArrayList<String> playerPlaying;
 	String currentPhase;
+	private boolean isWeWonAttack;// changed from isAttackWon to isWeWonAttack
+	private boolean isWeWonTheCard;// changed from isWonCard to isWeWonTheCard
 
 	public RiskPlayers() {
 		playerContinent = new HashMap<>();

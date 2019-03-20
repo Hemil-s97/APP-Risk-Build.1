@@ -23,6 +23,9 @@ public class RiskPlayers implements Strategy {
 	String currentPhase;
 	private boolean isWeWonAttack;// changed from isAttackWon to isWeWonAttack
 	private boolean isWeWonTheCard;// changed from isWonCard to isWeWonTheCard
+	String messageOfAttacker = "";// changed from attackerMsg to messageOfAttacker
+	String messageOfDefender = "";// changed from defenderMsg to messageOfDefender
+
 
 	public RiskPlayers() {
 		playerContinent = new HashMap<>();

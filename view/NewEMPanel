@@ -31,11 +31,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.lang3.StringUtils;
 
-import controller.MapEdit;
-import exception.InvalidMapException;
-import model.Continent;
-import model.RiskPlayers;
-import model.Territories;
+import com.risk.controller.EditMapFile;
+import com.risk.exception.InvalidMapException;
+import com.risk.models.Continent;
+import com.risk.models.Territory;
 
 
 /**
@@ -64,19 +63,19 @@ public class NewEMPanel implements ActionListener{
     private JButton saveMapButn;
     private JButton addContinentButn;
     private JButton addTerritoryButn;
-    private JButton deleteTerritoryButn;
-    private JButton deleteAdjTerrButn;
     private JButton addAdjTerritoryButn;
     private JButton editContinentButn;
     private JButton editTerritoryButn;
     private JButton deleteContinentButn;
-    private Territories territory;
+    private JButton deleteTerritoryButn;
+    private JButton deleteAdjTerrButn;
+    private Territory territory;
     private Continent continent;
     private boolean validFlag;
     JFrame frame;
     boolean editMapFileFlag;
     boolean isMapSelected = false;
-
+    
     private JComboBox<String> editContinentList;
     private JComboBox<String> editTerritoryList;
     private JComboBox<String> allContinentList;
@@ -88,7 +87,7 @@ public class NewEMPanel implements ActionListener{
     private JComboBox<String> deleteAdjTerrtList;
     private JComboBox<String> addAdjTerritoryListA;
     private JComboBox<String> addAdjTerritoryListB;
-    
+
     /**
      * This is a method UI of New and  Edit Existing Map
      * @param frame Current Frame
@@ -99,13 +98,13 @@ public class NewEMPanel implements ActionListener{
 	this.frame = frame;
 	this.editMapFileFlag = editMapFileFlag;
 	if(!editMapFileFlag) {
-	    territory = new Territories();
+	    territory = new Territory();
 	    continent = new Continent();
 	}
-	JPanel exstngMapPanl = new JPanel();
+	JPanel exstingMapPanl = new JPanel();
 	GridBagLayout exisitngMapLayout = new GridBagLayout();
-	exstngMapPanl.setLayout(exisitngMapLayout);
-	exstngMapPanl.setSize(new Dimension(400,250));
+	exstingMapPanl.setLayout(exisitngMapLayout);
+	exstingMapPanl.setSize(new Dimension(400,250));
 	mapOptionA = new JRadioButton("Choose Your Own Map");
 	mapOptionA.setActionCommand("Own Map");
 	JFileChooser chooseMap = new JFileChooser("D:");
@@ -127,7 +126,6 @@ public class NewEMPanel implements ActionListener{
 
 	    @Override
 	    public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
 		if(mapOptionA.isSelected() && chooseMap.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 		    existingMapFilePath = chooseMap.getSelectedFile().getPath();
 		    genEMData(existingMapFilePath);
@@ -217,60 +215,60 @@ public class NewEMPanel implements ActionListener{
 	backButn.addActionListener(this);
 	backButn.setActionCommand(backButnName);
 
-	exstngMapPanl.add(new JLabel("Add Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 3));
-	exstngMapPanl.add(new JLabel("Continent Name"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 4));
-	exstngMapPanl.add(addContinentField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 4));
-	exstngMapPanl.add(new JLabel("Value"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 4));
-	exstngMapPanl.add(addContinentValField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 4));
-	exstngMapPanl.add(addContinentButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 4));
+	exstingMapPanl.add(mapOptionA, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 0));
+	exstingMapPanl.add(fetchFileDataError, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 0));
+	exstingMapPanl.add(new JLabel("List of Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 1));
+	exstingMapPanl.add(new JLabel("All territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 1));
+	exstingMapPanl.add(new JLabel("Adjacent Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 1));
+	exstingMapPanl.add(allContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 2));		        	
+	exstingMapPanl.add(allTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 2));		
+	exstingMapPanl.add(allAdjTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 2));		
 
-	exstngMapPanl.add(mapOptionA, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 0));
-	exstngMapPanl.add(fetchFileDataError, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 0));
-	exstngMapPanl.add(new JLabel("List of Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 1));
-	exstngMapPanl.add(new JLabel("All territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 1));
-	exstngMapPanl.add(new JLabel("Adjacent Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 1));
-	exstngMapPanl.add(allContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 2));		        	
-	exstngMapPanl.add(allTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 2));		
-	exstngMapPanl.add(allAdjTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 2));		
+	exstingMapPanl.add(new JLabel("Add Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 3));
+	exstingMapPanl.add(new JLabel("Continent Name"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 4));
+	exstingMapPanl.add(addContinentField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 4));
+	exstingMapPanl.add(new JLabel("Value"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 4));
+	exstingMapPanl.add(addContinentValField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 4));
+	exstingMapPanl.add(addContinentButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 4));
 
-	exstngMapPanl.add(new JLabel("Add Adjacent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 7));
-	exstngMapPanl.add(new JLabel("Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 8));
-	exstngMapPanl.add(addAdjTerritoryListA, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 8));
-	exstngMapPanl.add(new JLabel("and It's Adjacent Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 8));
-	exstngMapPanl.add(addAdjTerritoryListB, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 8));
-	exstngMapPanl.add(addAdjTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 8));
+	exstingMapPanl.add(new JLabel("Add Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 5));
+	exstingMapPanl.add(new JLabel("Continent List"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 6));
+	exstingMapPanl.add(addTerrContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 6));
+	exstingMapPanl.add(new JLabel("Territory Name"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 6));
+	exstingMapPanl.add(addTerritoryField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 6));
+	exstingMapPanl.add(addTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 6));
 
-	exstngMapPanl.add(new JLabel("Edit Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 0, 9));
-	exstngMapPanl.add(editContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 10));
-	exstngMapPanl.add(editContinentField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 10));
-	exstngMapPanl.add(editContinentValue, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 10));
-	exstngMapPanl.add(editContinentButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 10));
+	exstingMapPanl.add(new JLabel("Add Adjacent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 7));
+	exstingMapPanl.add(new JLabel("Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 8));
+	exstingMapPanl.add(addAdjTerritoryListA, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 8));
+	exstingMapPanl.add(new JLabel("and It's Adjacent Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 8));
+	exstingMapPanl.add(addAdjTerritoryListB, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 8));
+	exstingMapPanl.add(addAdjTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 8));
 
-	exstngMapPanl.add(new JLabel("Add Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 5));
-	exstngMapPanl.add(new JLabel("Continent List"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 6));
-	exstngMapPanl.add(addTerrContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 6));
-	exstngMapPanl.add(new JLabel("Territory Name"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 6));
-	exstngMapPanl.add(addTerritoryField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 6));
-	exstngMapPanl.add(addTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 6));
-	
-	exstngMapPanl.add(new JLabel("List of Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 11));
-	exstngMapPanl.add(new JLabel("All territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 2, 11));
-	exstngMapPanl.add(new JLabel("Adjacent Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 4, 11));
-	exstngMapPanl.add(deleteContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 12));
-	exstngMapPanl.add(deleteContinentButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 1, 12));
-	exstngMapPanl.add(deleteTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 12));
-	exstngMapPanl.add(deleteTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 3, 12));		
-	exstngMapPanl.add(deleteAdjTerrtList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 12));
-	exstngMapPanl.add(deleteAdjTerrButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 5, 12));
-	exstngMapPanl.add(saveMapButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 13));
-	exstngMapPanl.add(backButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 3, 13));
+	exstingMapPanl.add(new JLabel("Edit Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 0, 9));
+	exstingMapPanl.add(editContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 10));
+	exstingMapPanl.add(editContinentField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 1, 10));
+	exstingMapPanl.add(editContinentValue, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 10));
+	exstingMapPanl.add(editContinentButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 3, 10));
 
-	exstngMapPanl.add(new JLabel("Edit Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 4, 9));
-	exstngMapPanl.add(editTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 10));
-	exstngMapPanl.add(editTerritoryField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 5, 10));        	
-	exstngMapPanl.add(editTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 6, 10));
-	
-	return exstngMapPanl;
+	exstingMapPanl.add(new JLabel("Edit Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 4, 9));
+	exstingMapPanl.add(editTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 10));
+	exstingMapPanl.add(editTerritoryField, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 5, 10));        	
+	exstingMapPanl.add(editTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 6, 10));
+
+	exstingMapPanl.add(new JLabel("List of Continent"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 0, 11));
+	exstingMapPanl.add(new JLabel("All territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 2, 11));
+	exstingMapPanl.add(new JLabel("Adjacent Territory"), setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.BOTH, 0.5, 0.5, 4, 11));
+	exstingMapPanl.add(deleteContinentList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 0, 12));
+	exstingMapPanl.add(deleteContinentButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 1, 12));
+	exstingMapPanl.add(deleteTerritoryList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 2, 12));
+	exstingMapPanl.add(deleteTerritoryButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 3, 12));		
+	exstingMapPanl.add(deleteAdjTerrtList, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.HORIZONTAL, 0.5, 0.5, 4, 12));
+	exstingMapPanl.add(deleteAdjTerrButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 5, 12));
+	exstingMapPanl.add(saveMapButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 2, 13));
+	exstingMapPanl.add(backButn, setGridBagConstraints(new Insets(5, 5, 5, 5), GridBagConstraints.CENTER, 0.5, 0.5, 3, 13));
+
+	return exstingMapPanl;
     }
     /**
      * This method is used to generate map data which is selected for editing
@@ -278,8 +276,8 @@ public class NewEMPanel implements ActionListener{
      */
     protected void genEMData(String filePath) {
 	if(StringUtils.isNotEmpty(filePath)) {
-	    MapEdit editMapFile = new MapEdit(filePath); 
-	    if(editMapFile.dataGeneration()) {
+	    EditMapFile editMapFile = new EditMapFile(filePath); 
+	    if(editMapFile.generateData()) {
 		fetchFileDataError.setText("File Content Data is validated and Ready to Edit");
 		territory = editMapFile.getTerritory();
 		continent = editMapFile.getContinent();
@@ -294,101 +292,6 @@ public class NewEMPanel implements ActionListener{
 	}
     }	
 
-    /**
-     * The GridBagConstraints is used specifies constraints for components that are laid out using the GridBagLayout class.
-     * Initialize GridBagConstraint object with all of its fields set to their default value.
-     * @param insets The initial insets value.
-     * @param fill The initial fill value.
-     * @param wx The initial weightx value.
-     * @param wy The initial weighty value.
-     * @param x The initial gridx value.
-     * @param y The initial gridy value.
-     * @return GridBagConstraints object with all of its fields set to the passed-in arguments
-     */
-    public GridBagConstraints setGridBagConstraints(Insets insets,int fill, double wx, double wy, int x, int y) {
-	con = new GridBagConstraints();
-	con.fill = fill;
-	con.insets = insets;
-	con.weightx = wx;
-	con.weighty = wy;
-	con.gridx = x;
-	con.gridy = y;
-	return con;
-    }
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
-	String actionName = arg0.getActionCommand();
-	System.out.println("Action Name " + actionName);
-	if(actionName.equalsIgnoreCase(backButnName)){
-	    Panels gamePanels = new Panels();
-	    frame.setContentPane(gamePanels.mainMenu(frame, new RiskPlayers()));
-	    frame.invalidate();
-	    frame.validate();
-	} else if(actionName.equalsIgnoreCase("Add Continent")){
-	    addContinent(addContinentField.getText(),addContinentValField.getText());
-	} else if(actionName.equalsIgnoreCase("Add Territory")){
-	    addTerritory(addTerrContinentList.getItemAt(addTerrContinentList.getSelectedIndex()),addTerritoryField.getText());
-	} else if(actionName.equalsIgnoreCase("Add Adjacent")){
-	    addAdjTerritory(addAdjTerritoryListA.getItemAt(addAdjTerritoryListA.getSelectedIndex()),addAdjTerritoryListB.getItemAt(addAdjTerritoryListB.getSelectedIndex()));
-	} else if(actionName.equalsIgnoreCase("Update Continent")){
-	    updateContinent(editContinentList.getItemAt(editContinentList.getSelectedIndex()),editContinentField.getText(),editContinentValue.getText());		 		    
-	} else if(actionName.equalsIgnoreCase("Update Territory")){
-	    updateTerritory(editTerritoryList.getItemAt(editTerritoryList.getSelectedIndex()),editTerritoryField.getText());
-	} else if(actionName.equalsIgnoreCase("Delete Continent")){
-	    deleteContinent(deleteContinentList.getItemAt(deleteContinentList.getSelectedIndex()));
-	} else if(actionName.equalsIgnoreCase("Delete Territory")){
-	    deleteTerritory(deleteTerritoryList.getItemAt(deleteAdjTerrtList.getSelectedIndex()));
-	} else if(actionName.equalsIgnoreCase("Delete Adjacent")){
-	    delAdjTerritory(deleteAdjTerrtList.getItemAt(deleteAdjTerrtList.getSelectedIndex()));
-	} else if(actionName.equalsIgnoreCase("Update Map Data")){
-	    MapEdit editMapFile = new MapEdit("previous.map");
-	    try {
-		if(isMapSelected) {
-		    validFlag = editMapFile.saveEditedMap(territory, continent);
-		    if(validFlag) {
-			displaySuccessDialog();
-		    }
-		} else {
-		    JOptionPane.showMessageDialog(null, "Please Select for Editing");
-		}
-
-	    } catch (InvalidMapException e) {
-		e.printStackTrace();
-	    }
-	}  else if(actionName.equalsIgnoreCase("Create Map Data")) {
-	    Random random = new Random();
-	    String tempFileName = "mapFile"+ random.nextInt(1000)+".map";
-	    MapEdit editMapFile = new MapEdit(tempFileName);
-	    try {
-		validFlag = editMapFile.saveEditedMap(territory, continent);
-		if(validFlag) {
-		    JOptionPane.showMessageDialog(null, "File Create with name : "+tempFileName,"Content Validated",JOptionPane.INFORMATION_MESSAGE);			    
-		} else {
-		    displayErrorDialog();
-		}
-
-
-	    } catch (InvalidMapException e) {
-		e.printStackTrace();
-	    } 
-
-	} else if(actionName.equalsIgnoreCase("allContinentList")) {
-	    updAllTerritoryLst();
-	} else if(actionName.equalsIgnoreCase("allTerritoryList")) {
-	    updAllAdjTerritoryLst();
-	} else if(actionName.equalsIgnoreCase("editContinentList") && editContinentList.getSelectedIndex() != -1) {
-	    editContinentField.setText(editContinentList.getItemAt(editContinentList.getSelectedIndex()));
-	    editContinentValue.setText(Integer.toString(continent.getValueOfContinent().get(editContinentList.getItemAt(editContinentList.getSelectedIndex()))));
-	} else if(actionName.equalsIgnoreCase("editTerritoryList") && editTerritoryList.getSelectedIndex() != -1) {
-	    editTerritoryField.setText(editTerritoryList.getItemAt(editTerritoryList.getSelectedIndex()));
-	} else if(actionName.equalsIgnoreCase("deleteContinentList")) {
-	    generateDelTerritoryLst(deleteContinentList.getItemAt(deleteContinentList.getSelectedIndex()));
-	} else if(actionName.equalsIgnoreCase("deleteTerritoryList")) {
-	    generateDelAdjTerritoryLst(deleteTerritoryList.getItemAt(deleteTerritoryList.getSelectedIndex()));
-	}
-
-    }
     /**
      * The GridBagConstraints is used specifies constraints for components that are laid out using the GridBagLayout class.
      * Initialize GridBagConstraint object with all of its fields set to their default value.
@@ -413,12 +316,106 @@ public class NewEMPanel implements ActionListener{
 	return con;
     }
     /**
+     * The GridBagConstraints is used specifies constraints for components that are laid out using the GridBagLayout class.
+     * Initialize GridBagConstraint object with all of its fields set to their default value.
+     * @param insets The initial insets value.
+     * @param fill The initial fill value.
+     * @param wx The initial weightx value.
+     * @param wy The initial weighty value.
+     * @param x The initial gridx value.
+     * @param y The initial gridy value.
+     * @return GridBagConstraints object with all of its fields set to the passed-in arguments
+     */
+    public GridBagConstraints setGridBagConstraints(Insets insets,int fill, double wx, double wy, int x, int y) {
+	con = new GridBagConstraints();
+	con.fill = fill;
+	con.insets = insets;
+	con.weightx = wx;
+	con.weighty = wy;
+	con.gridx = x;
+	con.gridy = y;
+	return con;
+    }
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+    // TODO Auto-generated method stub
+	String actionName = arg0.getActionCommand();
+	if(actionName.equalsIgnoreCase(backButnName)){
+	    Panels gamePanels = new Panels();
+	    frame.setContentPane(gamePanels.mainMenu(frame));
+	    frame.invalidate();
+	    frame.validate();
+	} else if(actionName.equalsIgnoreCase("Add Continent")){
+	    addContinent(addContinentField.getText(),addContinentValField.getText());
+	} else if(actionName.equalsIgnoreCase("Add Territory")){
+	    addTerritory(addTerrContinentList.getItemAt(addTerrContinentList.getSelectedIndex()),addTerritoryField.getText());
+	} else if(actionName.equalsIgnoreCase("Add Adjacent")){
+	    addAdjTerritory(addAdjTerritoryListA.getItemAt(addAdjTerritoryListA.getSelectedIndex()),addAdjTerritoryListB.getItemAt(addAdjTerritoryListB.getSelectedIndex()));
+	} else if(actionName.equalsIgnoreCase("Update Continent")){
+	    updateContinent(editContinentList.getItemAt(editContinentList.getSelectedIndex()),editContinentField.getText(),editContinentValue.getText());		 		    
+	} else if(actionName.equalsIgnoreCase("Update Territory")){
+	    updateTerritory(editTerritoryList.getItemAt(editTerritoryList.getSelectedIndex()),editTerritoryField.getText());
+	} else if(actionName.equalsIgnoreCase("Delete Continent")){
+	    deleteContinent(deleteContinentList.getItemAt(deleteContinentList.getSelectedIndex()));
+	} else if(actionName.equalsIgnoreCase("Delete Territory")){
+	    deleteTerritory(deleteTerritoryList.getItemAt(deleteAdjTerrtList.getSelectedIndex()));
+	} else if(actionName.equalsIgnoreCase("Delete Adjacent")){
+	    delAdjTerritory(deleteAdjTerrtList.getItemAt(deleteAdjTerrtList.getSelectedIndex()));
+	} else if(actionName.equalsIgnoreCase("Update Map Data")){
+	    EditMapFile editMapFile = new EditMapFile("previous.map");
+	    try {
+		if(isMapSelected) {
+		    validFlag = editMapFile.saveEditMap(continent, territory);
+		    if(validFlag) {
+			displaySuccessDialog();
+		    }
+		} else {
+		    JOptionPane.showMessageDialog(null, "Please Select for Editing");
+		}
+
+	    } catch (InvalidMapException e) {
+		e.printStackTrace();
+	    }
+	}  else if(actionName.equalsIgnoreCase("Create Map Data")) {
+	    Random random = new Random();
+	    String tempFileName = "mapFile"+ random.nextInt(1000)+".map";
+	    EditMapFile editMapFile = new EditMapFile(tempFileName);
+	    try {
+		validFlag = editMapFile.saveEditMap(continent, territory);
+		if(validFlag) {
+		    JOptionPane.showMessageDialog(null, "File Create with name : "+tempFileName,"Content Validated",JOptionPane.INFORMATION_MESSAGE);			    
+		} else {
+		    displayErrorDialog();
+		}
+
+
+	    } catch (InvalidMapException e) {
+		e.printStackTrace();
+	    } 
+
+	} else if(actionName.equalsIgnoreCase("allContinentList")) {
+	    updAllTerritoryLst();
+	} else if(actionName.equalsIgnoreCase("allTerritoryList")) {
+	    updAllAdjTerritoryLst();
+	} else if(actionName.equalsIgnoreCase("editContinentList") && editContinentList.getSelectedIndex() != -1) {
+	    editContinentField.setText(editContinentList.getItemAt(editContinentList.getSelectedIndex()));
+	    editContinentValue.setText(Integer.toString(continent.getContinentValue().get(editContinentList.getItemAt(editContinentList.getSelectedIndex()))));
+	} else if(actionName.equalsIgnoreCase("editTerritoryList") && editTerritoryList.getSelectedIndex() != -1) {
+	    editTerritoryField.setText(editTerritoryList.getItemAt(editTerritoryList.getSelectedIndex()));
+	} else if(actionName.equalsIgnoreCase("deleteContinentList")) {
+	    generateDelTerritoryLst(deleteContinentList.getItemAt(deleteContinentList.getSelectedIndex()));
+	} else if(actionName.equalsIgnoreCase("deleteTerritoryList")) {
+	    generateDelAdjTerritoryLst(deleteTerritoryList.getItemAt(deleteTerritoryList.getSelectedIndex()));
+	}
+
+    }
+    /**
      *  This method is used to generate territory drop down of particular continent in Delete Section
      * @param itemAt Current Continent whose territory need to populate
      */
     private void generateDelTerritoryLst(String itemAt) {
 	deleteTerritoryList.removeAllItems();
-	for(Entry<String, String> entry : territory.getTerritoryOfContinent().entrySet()) {
+	for(Entry<String, String> entry : territory.getTerritoryCont().entrySet()) {
 	    if(entry.getValue().equalsIgnoreCase(itemAt)) {
 		deleteTerritoryList.addItem(entry.getKey());
 	    }
@@ -430,7 +427,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void generateDelAdjTerritoryLst(String itemAt) {
 	deleteAdjTerrtList.removeAllItems();
-	for(Entry<String, ArrayList<String>> entry : territory.getNeighborTerritories().entrySet()) {
+	for(Entry<String, ArrayList<String>> entry : territory.getAdjacentTerritory().entrySet()) {
 	    if(entry.getKey().equalsIgnoreCase(itemAt)) {
 		for(int i = 0;i< entry.getValue().size();i++) {
 		    deleteAdjTerrtList.addItem(entry.getValue().get(i));
@@ -443,9 +440,8 @@ public class NewEMPanel implements ActionListener{
      * @param adjacent Current adjacent territory which need to delete
      */
     private void delAdjTerritory(String adjacent) {
-	System.out.println("Enter adjacent Territory  for delete is "+ adjacent);	    
 	if(deleteAdjTerrtList.getSelectedIndex() != -1) {
-	    territory.getNeighborTerritories().get(deleteTerritoryList.getItemAt(deleteTerritoryList.getSelectedIndex())).remove(adjacent);
+	    territory.getAdjacentTerritory().get(deleteTerritoryList.getItemAt(deleteTerritoryList.getSelectedIndex())).remove(adjacent);
 	    displaySuccessDeleteDialog();
 	    updateAllContinentList();
 	    updAddTerrContinentLst();
@@ -459,10 +455,9 @@ public class NewEMPanel implements ActionListener{
      *  This method is used to generate territory drop down  in Add Adjacent Section
      */
     private void updAddAdjTerritoryLst() {
-	// TODO Auto-generated method stub
 	addAdjTerritoryListA.removeAllItems();
 	addAdjTerritoryListB.removeAllItems();
-	for(Entry<String, String> entry : territory.getTerritoryOfContinent().entrySet()) {
+	for(Entry<String, String> entry : territory.getTerritoryCont().entrySet()) {
 	    addAdjTerritoryListA.addItem(entry.getKey());
 	    addAdjTerritoryListB.addItem(entry.getKey());
 
@@ -475,9 +470,9 @@ public class NewEMPanel implements ActionListener{
 	allAdjTerritoryList.removeAllItems();
 	try {
 	    if(allTerritoryList.getSelectedIndex() != -1 ) {
-		for(int i=0;i< territory.getNeighborTerritories().get(allTerritoryList.getItemAt(allTerritoryList.getSelectedIndex())).size();i++){
-		    if(StringUtils.isNotEmpty(territory.getNeighborTerritories().get(allTerritoryList.getItemAt(allTerritoryList.getSelectedIndex())).get(i)))
-			allAdjTerritoryList.addItem(territory.getNeighborTerritories().get(allTerritoryList.getItemAt(allTerritoryList.getSelectedIndex())).get(i));
+		for(int i=0;i< territory.getAdjacentTerritory().get(allTerritoryList.getItemAt(allTerritoryList.getSelectedIndex())).size();i++){
+		    if(StringUtils.isNotEmpty(territory.getAdjacentTerritory().get(allTerritoryList.getItemAt(allTerritoryList.getSelectedIndex())).get(i)))
+			allAdjTerritoryList.addItem(territory.getAdjacentTerritory().get(allTerritoryList.getItemAt(allTerritoryList.getSelectedIndex())).get(i));
 		}	
 	    }
 	}
@@ -492,16 +487,15 @@ public class NewEMPanel implements ActionListener{
      * @param territoryStr Territory which need to delete
      */
     private void deleteTerritory(String territoryStr) {
-	System.out.println("Enter  Territory  for delete is "+ territoryStr);
 	if(deleteTerritoryList.getSelectedIndex() != -1) {
-	    territory.getTerritoryOfContinent().remove(territoryStr);
-	    territory.getTotalTerritories().remove(territoryStr);
-	    territory.getNeighborTerritories().remove(territoryStr);
-	    for(Entry<String, ArrayList<String>> entry : continent.getContinentTerritories().entrySet()) {
+	    territory.getTerritoryCont().remove(territoryStr);
+	    territory.getTerritoryList().remove(territoryStr);
+	    territory.getAdjacentTerritory().remove(territoryStr);
+	    for(Entry<String, ArrayList<String>> entry : continent.getContinentTerritory().entrySet()) {
 		if(entry.getValue().contains(territoryStr))
 		    entry.getValue().remove(territoryStr);
 	    }
-	    for(Entry<String, ArrayList<String>> entry : territory.getNeighborTerritories().entrySet()) {
+	    for(Entry<String, ArrayList<String>> entry : territory.getAdjacentTerritory().entrySet()) {
 		ArrayList<String> tempArray = new ArrayList<>();
 		for(int i=0;i<entry.getValue().size();i++) {
 		    if(!entry.getValue().get(i).equalsIgnoreCase(territoryStr)) {
@@ -525,18 +519,25 @@ public class NewEMPanel implements ActionListener{
      * @param newTerritory
      */
     private void updateTerritory(String oldTerritory, String newTerritory) {
-	System.out.println("Territory Enter is " + oldTerritory + " and New Territory is : "+ newTerritory);
 	if(StringUtils.isNotEmpty(oldTerritory) && StringUtils.isNotEmpty(newTerritory)) {
-	    territory.getTerritoryOfContinent().put(newTerritory,territory.getTerritoryOfContinent().remove(oldTerritory));
-	    territory.getNeighborTerritories().put(newTerritory, territory.getNeighborTerritories().remove(oldTerritory));
-
-	    for(Entry<String, ArrayList<String>> entry : continent.getContinentTerritories().entrySet()) {
+	    territory.getTerritoryCont().put(newTerritory,territory.getTerritoryCont().remove(oldTerritory));
+	    territory.getAdjacentTerritory().put(newTerritory, territory.getAdjacentTerritory().remove(oldTerritory));
+	    ArrayList<String> temp =new ArrayList<>();
+	    for(int i = 0;i < territory.getTerritoryList().size();i++ ) {
+		if(territory.getTerritoryList().get(i).equalsIgnoreCase(oldTerritory)) {
+		    temp.add(newTerritory);
+		} else {
+		    temp.add(territory.getTerritoryList().get(i));    
+		}
+	    }
+	    territory.setTerritoryList(temp);
+	    for(Entry<String, ArrayList<String>> entry : continent.getContinentTerritory().entrySet()) {
 		if(entry.getValue().contains(oldTerritory)) {
 		    entry.getValue().remove(oldTerritory);
 		    entry.getValue().add(newTerritory);
 		}
 	    }
-	    for(Entry<String, ArrayList<String>> entry : territory.getNeighborTerritories().entrySet()) {
+	    for(Entry<String, ArrayList<String>> entry : territory.getAdjacentTerritory().entrySet()) {
 		ArrayList<String> tempArray = new ArrayList<>();
 		for(int i=0;i<entry.getValue().size();i++) {
 		    if(entry.getValue().get(i).equalsIgnoreCase(oldTerritory)) {
@@ -561,19 +562,18 @@ public class NewEMPanel implements ActionListener{
      */
     private void deleteContinent(String continentStr) {
 	try {
-	    System.out.println("Enter  continent  for delete is "+ continentStr);
 	    if(deleteContinentList.getSelectedIndex() != -1) {
-		continent.getValueOfContinent().remove(continentStr);
-		continent.getContinentTerritories().remove(continentStr);
-		Map<String, String> tempMap =territory.getTerritoryOfContinent();
+		continent.getContinentValue().remove(continentStr);
+		continent.getContinentTerritory().remove(continentStr);
+		Map<String, String> tempMap =territory.getTerritoryCont();
 		Set<String> set = new HashSet<> ();
 		for(Entry<String, String> entry : tempMap.entrySet()) {
 		    if(entry.getValue().equalsIgnoreCase(continentStr)) {
-			territory.getNeighborTerritories().remove(entry.getKey());
+			territory.getAdjacentTerritory().remove(entry.getKey());
 			set.add(entry.getKey());
 		    }
 		}
-		territory.getTerritoryOfContinent().keySet().removeAll(set);
+		territory.getTerritoryCont().keySet().removeAll(set);
 		displaySuccessDeleteDialog();
 		updateAllContinentList();
 		updAddTerrContinentLst();
@@ -590,7 +590,7 @@ public class NewEMPanel implements ActionListener{
 
     }
     /**
-     * This method is used to udpate Continent Name and it's value in Edit Continent Section
+     * This method is used to update Continent Name and it's value in Edit Continent Section
      * @param oldContinent Old Continent
      * @param newContinent New Continent 
      * @param value Value of Continent
@@ -600,9 +600,9 @@ public class NewEMPanel implements ActionListener{
 	if(StringUtils.isNotEmpty(oldContinent) && StringUtils.isNotEmpty(newContinent) && StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value) && Integer.parseInt(value) > 0) {
 	    continent.updateContinentValue(oldContinent, newContinent, Integer.parseInt(value));
 	    territory.updateTerritoryContinent(oldContinent, newContinent);
-	    ArrayList<String> tempArray = continent.getContinentTerritories().get(oldContinent);
-	    continent.getContinentTerritories().remove(oldContinent);
-	    continent.getContinentTerritories().put(newContinent,tempArray);
+	    ArrayList<String> tempArray = continent.getContinentTerritory().get(oldContinent);
+	    continent.getContinentTerritory().remove(oldContinent);
+	    continent.getContinentTerritory().put(newContinent,tempArray);
 	    displaySuccessDialog();
 	    updateAllContinentList();
 	    updAddTerrContinentLst();
@@ -622,7 +622,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void addTerritory(String continentStr, String territoryStr) {
 	System.out.println("Continent selected is " + continentStr + " with Territory " + territoryStr);
-	if(StringUtils.isNotEmpty(continentStr) && StringUtils.isNotEmpty(territoryStr) && !territory.getTerritoryOfContinent().containsKey(territoryStr)) {
+	if(StringUtils.isNotEmpty(continentStr) && StringUtils.isNotEmpty(territoryStr) && !territory.getTerritoryCont().containsKey(territoryStr)) {
 	    territory.addTerritoryCont(territoryStr, continentStr);
 	    territory.addTerritory(territoryStr);
 	    continent.addContinentTerritory(continentStr, territoryStr);
@@ -648,7 +648,7 @@ public class NewEMPanel implements ActionListener{
     private void addAdjTerritory( String territoryStr, String adjacent) {
 	System.out.println("Continent is Territory " + territoryStr + " and Adjacent of Terriory is " + adjacent);
 	if( StringUtils.isNotEmpty(territoryStr) && StringUtils.isNotEmpty(adjacent) && !territoryStr.equalsIgnoreCase(adjacent)) {
-	    if(territory.getNeighborTerritories().containsKey(territoryStr) && !territory.getNeighborTerritories().get(territoryStr).contains(adjacent) && territory.getNeighborTerritories().get(territoryStr).size() < 10 ) {
+	    if(territory.getAdjacentTerritory().containsKey(territoryStr) && !territory.getAdjacentTerritory().get(territoryStr).contains(adjacent) && territory.getAdjacentTerritory().get(territoryStr).size() < 10 ) {
 		territory.addAdjacentTerritory(territoryStr, adjacent);
 		territory.addAdjacentTerritory(adjacent, territoryStr);
 		displaySuccessDialog();
@@ -658,7 +658,7 @@ public class NewEMPanel implements ActionListener{
 		updAddAdjTerritoryLst();
 		updEditTerritoryLst();
 		updDelContinentLst(); 
-	    } else if(!territory.getNeighborTerritories().containsKey(territoryStr)){
+	    } else if(!territory.getAdjacentTerritory().containsKey(territoryStr)){
 		territory.addAdjacentTerritory(territoryStr, adjacent);
 		territory.addAdjacentTerritory(adjacent, territoryStr);
 		displaySuccessDialog();
@@ -681,7 +681,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void updAllTerritoryLst() {
 	allTerritoryList.removeAllItems();
-	for(Entry<String, String> entry : territory.getTerritoryOfContinent().entrySet()) {
+	for(Entry<String, String> entry : territory.getTerritoryCont().entrySet()) {
 	    if(entry.getValue().equalsIgnoreCase(allContinentList.getItemAt(allContinentList.getSelectedIndex()))) {
 		allTerritoryList.addItem(entry.getKey());
 	    }
@@ -695,7 +695,7 @@ public class NewEMPanel implements ActionListener{
     public void addContinent(String continentStr, String value) {
 	System.out.println("Continent Enter is " + continentStr + " with value " + value);
 	if(StringUtils.isNotEmpty(continentStr) && StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value) && Integer.parseInt(value) > 0) {
-	    if(!continent.getValueOfContinent().containsKey(continentStr)) {
+	    if(!continent.getContinentValue().containsKey(continentStr)) {
 		continent.setContinentValue(continentStr, Integer.parseInt(value));
 		displaySuccessDialog();
 		addContinentField.setText("");
@@ -720,7 +720,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void updateAllContinentList() {
 	allContinentList.removeAllItems();
-	for(Entry<String, Integer> entry : continent.getValueOfContinent().entrySet()) {
+	for(Entry<String, Integer> entry : continent.getContinentValue().entrySet()) {
 	    allContinentList.addItem(entry.getKey());
 	}
     }
@@ -729,7 +729,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void updEditTerritoryLst() {
 	editTerritoryList.removeAllItems();
-	for(Entry<String,String> entry : territory.getTerritoryOfContinent().entrySet()) {
+	for(Entry<String,String> entry : territory.getTerritoryCont().entrySet()) {
 	    editTerritoryList.addItem(entry.getKey());
 	}
     }
@@ -738,7 +738,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void updDelContinentLst() {
 	deleteContinentList.removeAllItems();
-	for(Entry<String, Integer> entry : continent.getValueOfContinent().entrySet()) {
+	for(Entry<String, Integer> entry : continent.getContinentValue().entrySet()) {
 	    deleteContinentList.addItem(entry.getKey());
 	}
     }
@@ -747,7 +747,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void updEditContinentLst() {
 	editContinentList.removeAllItems();
-	for(Entry<String, Integer> entry : continent.getValueOfContinent().entrySet()) {
+	for(Entry<String, Integer> entry : continent.getContinentValue().entrySet()) {
 	    editContinentList.addItem(entry.getKey());
 	}	    
     }
@@ -756,7 +756,7 @@ public class NewEMPanel implements ActionListener{
      */
     private void updAddTerrContinentLst() {
 	addTerrContinentList.removeAllItems();
-	for(Entry<String, Integer> entry : continent.getValueOfContinent().entrySet()) {
+	for(Entry<String, Integer> entry : continent.getContinentValue().entrySet()) {
 	    addTerrContinentList.addItem(entry.getKey());
 	}	    
     }

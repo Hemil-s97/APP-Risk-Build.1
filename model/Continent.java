@@ -86,11 +86,19 @@ public class Continent {
 	 * @param continent Name of Continent
 	 * @param value     value of armies when continent is fully acquired by player
 	 */
+	
+	// updated the if and else statement
 	public void setContinentValue(String continent, int value) {
-		if (valueOfContinent.containsKey(continent)) {
-			valueOfContinent.replace(continent, valueOfContinent.get(continent), value);
-		} else {
+		
+		if (!(valueOfContinent.containsKey(continent))) {
 			valueOfContinent.put(continent, value);
+					} 
+		else if ((valueOfContinent.containsKey(continent))) {
+			
+			
+			valueOfContinent.replace(continent, valueOfContinent.get(continent), value);
+
+			
 		}
 	}
 

@@ -37,16 +37,22 @@ public class Continent {
 		//playerOccupiedContTerr = new HashMap<>();
 	}
 	
-	
+	// changed if and else statements
 	
 		public void  addContTerritoryValue(String continent) {
-		if (contTerrValue.containsKey(continent)) {
-			contTerrValue.replace(continent, contTerrValue.get(continent), contTerrValue.get(continent) + 1);
+		if (!(contTerrValue.containsKey(continent))) {
+			
+			contTerrValue.put(continent, 1);
+			
+			
+			
 		} 
 			
 			
-			else {
-			contTerrValue.put(continent, 1);
+			else if((contTerrValue.containsKey(continent))){
+				
+				contTerrValue.replace(continent, contTerrValue.get(continent), contTerrValue.get(continent) + 1);
+			
 		}
 	}
 	

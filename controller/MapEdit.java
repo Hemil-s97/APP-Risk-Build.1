@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import exception.InvalidMapException;
@@ -60,15 +61,12 @@ public class MapEdit {
 	public boolean saveEditedMap(Territories territory, Continent continent) throws InvalidMapException {
 		this.territory = territory;
 		this.continent = continent;
+		territory.setTerritoryNumber(new HashMap<>());
 		int i = 0;
 		while (i < territory.getTotalTerritories().size()) {
 			territory.addNumberOfTerritory(territory.getTotalTerritories().get(i), i);
 			i++;
 		}
-		/*
-		 * for (int i = 0; i < territory.getTerritoryList().size(); i++) {
-		 * territory.addNumberOfTerritory(territory.getTerritoryList().get(i), i); }
-		 */
 		ValidationOfMap mapValidator = new ValidationOfMap(continent, territory);
 		boolean flag = mapValidator.mapValidation();
 		if (flag) {
@@ -147,6 +145,9 @@ public class MapEdit {
 			if (isFileCreated) {
 				FileWriter fileWriter = new FileWriter(file);
 				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				for (Entry<String, Integer> entry : continent.getValueOfContinent().entrySet()) {
+					listOfContinents.append(entry.getKey() + "=" + entry.getValue() + "\n");
+				}
 				for (Entry<String, ArrayList<String>> entry : territory.getNeighborTerritories().entrySet()) {
 					listOfTerritories
 							.append(entry.getKey() + ",0,0," + territory.getTerritoryOfContinent().get(entry.getKey()));
@@ -155,15 +156,9 @@ public class MapEdit {
 						listOfTerritories.append("," + entry.getValue().get(i));
 						i++;
 					}
-					/*
-					 * for (int i = 0; i < entry.getValue().size(); i++) {
-					 * listOfTerritories.append("," + entry.getValue().get(i)); }
-					 */
 					listOfTerritories.append("\n");
 				}
-				for (Entry<String, Integer> entry : continent.getValueOfContinent().entrySet()) {
-					listOfContinents.append(entry.getKey() + "=" + entry.getValue() + "\n");
-				}
+				
 				bufferedWriter.write(defaultMapTag + "" + listOfContinents + "" + listOfTerritories);
 				bufferedWriter.flush();
 				bufferedWriter.close();

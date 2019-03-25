@@ -3,17 +3,17 @@ package TestModel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.Territories;
+import com.risk.models.Territories;
 
 /**
- * Territories Model Test class.
+ * Territory Model Test class.
  *
  */
 public class TestTerritories {
@@ -21,9 +21,13 @@ public class TestTerritories {
 	String territoryTwo = "Algeria";
 	String territoryThree = "Western Sahara";
 	String territoryFour = "Mauritania";
+	String africaContinent = "Africa";
+	String asiaContinent = "Asia";
 	Territories territory;
 	
 	Map<String, ArrayList<String>> adjacentTerritory; 
+	Map<String, String> territoryContinent; 
+	Map<String, String> territoryUser; 
 	ArrayList<String> territoryList;
 	Map<String, Integer> territoryArmy;
 	
@@ -36,11 +40,14 @@ public class TestTerritories {
 		adjacentTerritory = new HashMap<>();
 		territoryList = new ArrayList<>();
 		territoryArmy = new HashMap<>();
+		territoryContinent = new HashMap<>();
+		territoryUser = new HashMap<>();
 		
 		territoryList.add(territoryTwo);
 		territoryList.add(territoryThree);
 		adjacentTerritory.put(territoryOne, territoryList);
-		
+		territoryContinent.put(territoryTwo,africaContinent);
+		territoryContinent.put(territoryThree,africaContinent);
 		territoryList = new ArrayList<>();
 		territoryList.add(territoryThree);
 		territoryList.add(territoryFour);
@@ -49,6 +56,31 @@ public class TestTerritories {
 		
 		territoryArmy.put(territoryOne, 3);
 		territoryArmy.put(territoryTwo, 1);
+		territoryUser.put(territoryOne,"man");
+		territoryUser.put(territoryTwo,"prince");
+	}
+	
+	/**
+	 * This method is to test add Adjacent Territory functionality.
+	 */
+	@Test
+	public void testAddNeighboringTerritory() {
+		territory.addAdjacentTerritory(territoryOne,territoryTwo);
+		territory.addAdjacentTerritory(territoryOne, territoryThree);
+		territory.addAdjacentTerritory(territoryTwo, territoryThree);
+		territory.addAdjacentTerritory(territoryTwo, territoryFour);
+		territory.addAdjacentTerritory(territoryTwo, territoryOne);
+		assertEquals(adjacentTerritory,territory.getAdjacentTerritory());
+	}
+	
+	/**
+	 * This method is to test AddTerritoryCont method.
+	 */
+	@Test
+	public void testAddTerritoryCont() {
+		territory.addTerritoryCont(territoryThree, africaContinent);
+		territory.addTerritoryCont(territoryTwo, africaContinent);
+		assertEquals(territoryContinent, territory.getTerritoryCont());
 	}
 	
 	/**
@@ -66,18 +98,34 @@ public class TestTerritories {
 	}
 	
 	/**
-	 * This method is to test add Adjacent Territory functionality.
+	 * This method is to test UpdateTerritoryUser method.
 	 */
 	@Test
-	public void testAddNeighboringTerritory() {
-		territory.addAdjacentTerritory(territoryOne,territoryTwo);
-		territory.addAdjacentTerritory(territoryOne, territoryThree);
-		territory.addAdjacentTerritory(territoryTwo, territoryThree);
-		territory.addAdjacentTerritory(territoryTwo, territoryFour);
-		territory.addAdjacentTerritory(territoryTwo, territoryOne);
-		assertEquals(adjacentTerritory,territory.getNeighborTerritories());
+	public void testTerritoryUserUpdation() {
+		territory.updateTerritoryUser("manan", territoryOne);
+		territory.updateTerritoryUser("prince", territoryTwo);
+		assertEquals(territoryUser,territory.updateTerritoryUser("man", territoryOne));
 	}
 	
-	
+	/**
+	 * This method is used to test Add Territory method.
+	 */
+	@Test
+	public void testAddTerritory() {
+		territory.addTerritory(territoryThree);
+		territory.addTerritory(territoryFour);
+		territory.addTerritory(territoryOne);
+		assertEquals(territoryList,territory.getTerritoryList());
+	}
+	/**
+	 * This method is to test UpdateTerritoryContinent.
+	 */
+	@Test
+	public void testTerritoryContinentUpdation() {
+		territory.addTerritoryCont(territoryTwo, asiaContinent);
+		territory.addTerritoryCont(territoryThree, asiaContinent);
+		territory.updateTerritoryContinent(asiaContinent, africaContinent);
+		assertEquals(territoryContinent, territory.getTerritoryCont());
+	}
 	
 }

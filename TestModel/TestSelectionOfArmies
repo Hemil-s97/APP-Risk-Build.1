@@ -5,41 +5,40 @@ import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.SelectionOfArmies;
+import com.risk.models.SelectionOfArmies;
 
 /**
- * SelectionOfArmies Model Test class.
+ * ArmiesSelection Model Test class.
  *
  */
-public class TestSelectionOfArmies {
+public class ArmiesSelectionTest {
 	int twoPlayerArmies = 40;
 	int threePlayerArmies = 35;
 	int fourPlayerArmies = 30;
 	int fivePlayerArmies = 25;
 
-	SelectionOfArmies twoPlayer;
-	SelectionOfArmies threePlayer;
-	SelectionOfArmies fourPlayer;
-	SelectionOfArmies fivePlayer;
+	SelectionOfArmies twoPlayers;
+	SelectionOfArmies threePlayers;
+	SelectionOfArmies fourPlayers;
+	SelectionOfArmies fivePlayers;
 	
+	/**
+	 * This method tests the number of initial armies that needs to be selected based on Players.
+	 * 
+	 */
+	@Test public void TestSelectionOfArmies() {
+		assertEquals(twoPlayerArmies,twoPlayers.getPlayerArmies());
+		assertEquals(threePlayerArmies,threePlayers.getPlayerArmies());
+		assertEquals(fourPlayerArmies,fourPlayers.getPlayerArmies());
+		assertEquals(fivePlayerArmies,fivePlayers.getPlayerArmies());
+	}
 	/**
 	 * This method is invoked at the start of all the test methods.
 	 */
 	@BeforeEach public void beforeTest() {
-		this.twoPlayer = new SelectionOfArmies(2);
-		this.threePlayer = new SelectionOfArmies(3);
-		this.fourPlayer = new SelectionOfArmies(4);
-		this.fivePlayer = new SelectionOfArmies(5);
-	}
-	
-	/**
-	 * This method is to test the selection of Number of initial armies according to Player.
-	 * 
-	 */
-	@Test public void testSelectionOfArmies() {
-		assertEquals(twoPlayerArmies,twoPlayer.getArmiesOfPlayers());
-		assertEquals(threePlayerArmies,threePlayer.getArmiesOfPlayers());
-		assertEquals(fourPlayerArmies,fourPlayer.getArmiesOfPlayers());
-		assertEquals(fivePlayerArmies,fivePlayer.getArmiesOfPlayers());
+		this.twoPlayers = new SelectionOfArmies(2);
+		this.threePlayers = new SelectionOfArmies(3);
+		this.fourPlayers = new SelectionOfArmies(4);
+		this.fivePlayers = new SelectionOfArmies(5);
 	}
 }

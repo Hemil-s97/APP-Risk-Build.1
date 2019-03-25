@@ -10,7 +10,7 @@ import model.Territories;
 import validation.ValidationOfMap;
 
 /**
- * ValidationOfMap Test class
+ * MapValidator Test class
  *
  */
 public class ValidationOfMapTest {
@@ -20,8 +20,8 @@ public class ValidationOfMapTest {
 	Territories territory;
 
 	/**
-	 * This method is used to initialize all Map Data and invoked at the start of
-	 * all the test methods.
+	 * This method is used to initialize all Map Data and
+	 * invoked at the start of all the test methods.
 	 */
 	@BeforeEach
 	public void beforeTest() {
@@ -45,7 +45,7 @@ public class ValidationOfMapTest {
 		territory.addAdjacentTerritory("Western Sahara", "Algeria");
 		territory.addAdjacentTerritory("Western Sahara", "Mauritania");
 		territory.addAdjacentTerritory("Mauritania", "Algeria");
-		territory.addAdjacentTerritory("Mauritania", "Western Sahara");
+		territory.addAdjacentTerritory("Mauritania", "Western Sahara");	
 
 		territory.addNumberOfTerritory("Morocco", 0);
 		territory.addNumberOfTerritory("Algeria", 1);
@@ -55,22 +55,18 @@ public class ValidationOfMapTest {
 
 	/**
 	 * This method is used to test
-	 * {@linkplain validation.ValidationOfMap#mapValidation()} method of
-	 * ValidationOfMao.java.
-	 * 
+	 * {@linkplain com.risk.validate.ValidationOfMap#validateMap()} method of MapValidator.java.
 	 * @throws InvalidMapException map file should not be null.
 	 */
 	@Test
 	public void testMapValidation() throws InvalidMapException {
 		mapValidator = new ValidationOfMap(continent, territory);
-		assertTrue(mapValidator.mapValidation());
+		assertTrue(mapValidator.validateMap());
 	}
-
+	
 	/**
 	 * This method is used to test
-	 * {@link validation.ValidationOfMap#adjacentTerritoryValidation()}
-	 * method of ValidationOfMap.java.
-	 * 
+	 * {@link com.risk.validate.ValidationOfMap#validateAdjcentTerritories()} method of MapValidator.java.
 	 * @throws InvalidMapException Adjacent should not be null.
 	 */
 	@Test
@@ -78,26 +74,23 @@ public class ValidationOfMapTest {
 		mapValidator = new ValidationOfMap(continent, territory);
 		assertTrue(mapValidator.adjacentTerritoryValidation());
 	}
-
+	
 	/**
 	 * This method is used to test
-	 * {@link validation.ValidationOfMap#continentValueValidation()} method
-	 * of ValidationOfMap.java.
-	 * 
+	 * {@link com.risk.validate.ValidationOfMap#validateContinentValue()} method of MapValidator.java.
 	 * @throws InvalidMapException Continent Control value should be more than 1.
 	 */
 	@Test
 	public void testContinentValueValidation() throws InvalidMapException {
 		mapValidator = new ValidationOfMap(continent, territory);
-		assertTrue(mapValidator.continentValueValidation());
+		assertTrue(mapValidator.validateContinentValue());
 	}
-
+	
 	/**
 	 * This method is used to test
-	 * {@link validation.ValidationOfMap#isGraphConnected()} method of
-	 * ValidationOfMap.java.
-	 * 
-	 * @throws InvalidMapException Graph is not Connected.
+	 * {@link com.risk.validate.ValidationOfMap#isGraphConnected()} method of MapValidator.java.
+	 * @throws InvalidMapException 
+	 * 							Graph is not Connected.
 	 */
 	@Test
 	public void testIsGraphConnected() throws InvalidMapException {
@@ -107,28 +100,24 @@ public class ValidationOfMapTest {
 
 	/**
 	 * This method is used to test
-	 * {@link validation.ValidationOfMap#continentValidation()} method of
-	 * ValidationOfMap.java.
-	 * 
+	 * {@link com.risk.validate.ValidationOfMap#validateContinent()} method of MapValidator.java.
 	 * @throws InvalidMapException Continent should be unique
 	 */
 	@Test
 	public void testContinentValidation() throws InvalidMapException {
 		mapValidator = new ValidationOfMap(continent, territory);
-		assertTrue(mapValidator.continentValidation());
+		assertTrue(mapValidator.validateContinent());
 	}
 
 	/**
 	 * This method is used to test
-	 * {@link validation.ValidationOfMap#territoryValidation()} method of
-	 * ValidationOfMap.java.
-	 * 
-	 * @throws InvalidMapException Territory should not be null.
+	 * {@link com.risk.validate.ValidationOfMap#validateTerritories()} method of MapValidator.java.
+	 * @throws InvalidMapException Territory should not be null. 
 	 */
 	@Test
 	public void testTerritoriesValidation() throws InvalidMapException {
 		mapValidator = new ValidationOfMap(continent, territory);
-		assertTrue(mapValidator.territoryValidation());
-
+		assertTrue(mapValidator.validateTerritories());
 	}
+
 }

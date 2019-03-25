@@ -9,12 +9,12 @@ public class SelectionOfArmies {
 	private int armies;
 
 	/**
-	 * This constructor set the number of armies according to playerPlaying.
+	 * In this constructor set the number of armies according to playerPlaying.
 	 * @param playerPlaying Number of RiskPlayers playing the game.
 	 */
 	public SelectionOfArmies(int playerPlaying) {
 		super();
-		armies = 50 - (playerPlaying * 5);
+		armies = 45 - (playerPlaying * 5);
 	}
 
 	/**
